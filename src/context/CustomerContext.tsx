@@ -47,9 +47,9 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
   const filteredAndSortedCustomers = useMemo(() => {
-    let filtered = customersList;
+    let filtered = [...customersList];
 
-    if (searchInputValue) {
+    if (searchInputValue.trim()) {
       filtered = filtered.filter((customer) =>
         `${customer.firstName} ${customer.lastName}`
           .toLowerCase()
@@ -74,7 +74,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
     });
 
     return filtered;
-  }, [searchInputValue, companyFilter, sortField, sortOrder, customersList]);
+  }, [customersList, searchInputValue, companyFilter, sortField, sortOrder]);
 
   return (
     <CustomerContext.Provider

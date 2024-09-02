@@ -8,7 +8,7 @@ const CustomerDataGrid = () => {
     useContext(CustomerContext);
 
   return (
-    <div style={{ height: 'full', width: '60%', margin: 'auto' }}>
+    <div style={{ height: '55vh', width: '60%', margin: 'auto' }}>
       <DataGrid
         rows={filteredAndSortedCustomers}
         columns={columns}
@@ -21,6 +21,7 @@ const CustomerDataGrid = () => {
           },
           pagination: { paginationModel: { pageSize: 10 } },
         }}
+        pageSizeOptions={[5, 10, 25, 50]}
       />
     </div>
   );
