@@ -4,7 +4,7 @@ import { CustomerContext } from '../../context/CustomerContext';
 import columns from './columns';
 
 const CustomerDataGrid = () => {
-  const { filteredAndSortedCustomers, setSelectedCustomer } =
+  const { filteredAndSortedCustomers, setSelectedCustomer, searchInputValue } =
     useContext(CustomerContext);
 
   return (
@@ -16,9 +16,6 @@ const CustomerDataGrid = () => {
         disableColumnMenu
         disableColumnSorting
         initialState={{
-          sorting: {
-            sortModel: [{ field: 'id', sort: 'asc' }],
-          },
           pagination: { paginationModel: { pageSize: 10 } },
         }}
         pageSizeOptions={[5, 10, 25, 50]}

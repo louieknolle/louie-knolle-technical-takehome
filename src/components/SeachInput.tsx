@@ -18,7 +18,7 @@ const SearchInput = () => {
         value={searchInputValue}
         onChange={handleChange}
         placeholder="Jora Doe"
-        className="rounded border border-gray-300 p-2"
+        className="w-60 rounded border border-gray-300 p-[15px]"
       />
     </div>
   );

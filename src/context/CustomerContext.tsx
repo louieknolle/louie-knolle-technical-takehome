@@ -25,8 +25,8 @@ interface CustomerContextValue {
   setSelectedCustomer: React.Dispatch<
     React.SetStateAction<Customer | undefined>
   >;
-  companyFilter: string;
-  setCompanyFilter: React.Dispatch<React.SetStateAction<string>>;
+  companyFilter: string[];
+  setCompanyFilter: React.Dispatch<React.SetStateAction<string[]>>;
   sortField: SortField;
   setSortField: React.Dispatch<React.SetStateAction<SortField>>;
   sortOrder: SortOrder;
@@ -42,7 +42,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('');
   const [customersList, setCustomersList] = useState<Customer[]>(customers);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer>();
-  const [companyFilter, setCompanyFilter] = useState<string>('');
+  const [companyFilter, setCompanyFilter] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>('firstName');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
@@ -57,11 +57,12 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
       );
     }
 
-    if (companyFilter) {
-      filtered = filtered.filter(
-        (customer) => customer.companyName === companyFilter,
+    if (companyFilter.length > 0) {
+      filtered = filtered.filter((customer) =>
+        companyFilter.includes(customer.companyName),
       );
     }
+
     filtered.sort((a, b) => {
       const fieldA = a[sortField].toLowerCase();
       const fieldB = b[sortField].toLowerCase();
