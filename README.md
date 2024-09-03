@@ -17,7 +17,7 @@ To get started with the project, follow these steps:
 1. **Clone the repository and navigate to parent directory in your terminal:**
    ```bash
    git clone https://github.com/louieknolle/louie-knolle-technical-takehome.git
-   cd new-relic-takehome
+   cd louie-knolle-technical-takehome
    ```
 2. **Install dependencies:**
 
