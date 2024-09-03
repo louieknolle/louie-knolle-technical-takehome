@@ -3,8 +3,11 @@ import React, {
   createContext,
   useState,
   useMemo,
+  useEffect,
+  useRef,
 } from 'react';
 import customers from '../data/customers.json';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export interface Customer {
   firstName: string;
@@ -47,12 +50,47 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
   const [sortField, setSortField] = useState<SortField>('firstName');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isFirstRender = useRef(true);
+
   const resetFilters = () => {
     setSearchInputValue('');
     setCompanyFilter([]);
     setSortField('firstName');
     setSortOrder('asc');
+    navigate('?');
   };
+
+  // insert search, filter and sort params into URL
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchInputValue) params.set('search', searchInputValue);
+    if (companyFilter.length > 0)
+      params.set('companies', companyFilter.join(','));
+    if (sortField) params.set('sortField', sortField);
+    if (sortOrder) params.set('sortOrder', sortOrder);
+
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [searchInputValue, companyFilter, sortField, sortOrder, navigate]);
+
+  // read search, filter and sort params from URL and set state
+  useEffect(() => {
+    if (isFirstRender.current) {
+      const params = new URLSearchParams(location.search);
+      const search = params.get('search') || '';
+      const companies = params.get('companies')?.split(',') || [];
+      const field = (params.get('sortField') as SortField) || 'firstName';
+      const order = (params.get('sortOrder') as SortOrder) || 'asc';
+
+      setSearchInputValue(search);
+      setCompanyFilter(companies);
+      setSortField(field);
+      setSortOrder(order);
+
+      isFirstRender.current = false;
+    }
+  }, [location.search]);
 
   const filteredAndSortedCustomers = useMemo(() => {
     let filtered = [...customersList];
