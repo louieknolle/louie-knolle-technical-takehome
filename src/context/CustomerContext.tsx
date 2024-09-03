@@ -32,6 +32,7 @@ interface CustomerContextValue {
   sortOrder: SortOrder;
   setSortOrder: React.Dispatch<React.SetStateAction<SortOrder>>;
   filteredAndSortedCustomers: Customer[];
+  resetFilters: () => void;
 }
 
 export const CustomerContext = createContext<CustomerContextValue>(
@@ -45,6 +46,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
   const [companyFilter, setCompanyFilter] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SortField>('firstName');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+
+  const resetFilters = () => {
+    setSearchInputValue('');
+    setCompanyFilter([]);
+    setSortField('firstName');
+    setSortOrder('asc');
+  };
 
   const filteredAndSortedCustomers = useMemo(() => {
     let filtered = [...customersList];
@@ -93,6 +101,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren) => {
         sortOrder,
         setSortOrder,
         filteredAndSortedCustomers,
+        resetFilters,
       }}
     >
       {children}

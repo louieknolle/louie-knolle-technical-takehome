@@ -1,5 +1,4 @@
-// CompanyFilter.tsx
-import React, { useContext } from 'react';
+import { useContext, ChangeEvent } from 'react';
 import { CustomerContext } from '@/context/CustomerContext';
 import { Autocomplete, TextField } from '@mui/material';
 
@@ -12,7 +11,7 @@ const CompanyFilter = () => {
   ];
 
   const handleCompanyChange = (
-    event: React.ChangeEvent<{}>,
+    event: ChangeEvent<{}>,
     newValue: string[] | null,
   ) => {
     setCompanyFilter(newValue || []);

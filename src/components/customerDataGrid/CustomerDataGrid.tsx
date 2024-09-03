@@ -4,11 +4,11 @@ import { CustomerContext } from '../../context/CustomerContext';
 import columns from './columns';
 
 const CustomerDataGrid = () => {
-  const { filteredAndSortedCustomers, setSelectedCustomer, searchInputValue } =
+  const { filteredAndSortedCustomers, setSelectedCustomer } =
     useContext(CustomerContext);
 
   return (
-    <div style={{ height: '55vh', width: '60%', margin: 'auto' }}>
+    <div style={{ height: '70vh', width: '60%', margin: 'auto' }}>
       <DataGrid
         rows={filteredAndSortedCustomers}
         columns={columns}
